@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1566298275 source:/home/cnslaba2/Documents/BAP/Labset/P1/main.cpp
+	<stdlib.h>
+	<iostream>
+	<fstream>
+	<vector>
+

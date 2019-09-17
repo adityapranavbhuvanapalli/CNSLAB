@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1568717616 source:/home/cnslaba2/Documents/BAP/Labset/P6/main.cpp
+	<iostream>
+	<bits/stdc++.h>
+	<fstream>
+

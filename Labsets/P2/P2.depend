@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1566901852 source:/home/cnslaba2/Documents/BAP/Labset/P2/main.cpp
+	<iostream>
+	<cmath>
+
