@@ -27,12 +27,17 @@ int main()
 
     cout<<"Enter input string (hex): "; cin>>hex>>inputhex;
     input= bitset<64>(inputhex).to_string() ;
-    cout<<"Binary Representation of input :\n"<<input<<endl;
+    cout<<"Binary Representation of input :\n"<<input<<endl<<endl;
     R=input.substr(32,32);
 
     //Apply Expansion Permutation && XOR with key
     for(int i=0;i<48;i++)
         inputToSbox+=(key[i]!=R[expPerm[i]-1])?'1':'0';   //XOR
     cout<<"Input to S-box : "<<inputToSbox<<endl;
+
+    ofstream fout("inputToSbox.txt");
+    fout<<input<<endl<<inputToSbox<<endl;
+    fout.close();
+
     return 0;
 }
