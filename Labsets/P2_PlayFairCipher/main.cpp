@@ -59,14 +59,10 @@ string constructDigrams(string temp)
 {
     int i;
     for(i=0;i<ceil(temp.length()/2)*2;i+=2)
-    {
         if(temp[i]==temp[i+1])
-        {
-            temp=temp.substr(0,i+1).append(1,'x').append(temp.substr(i+1,temp.length()-i-1));
-        }
-    }
+            temp=temp.substr(0,i+1) + 'x' + (temp.substr(i+1,temp.length()-i-1));
     if(temp.length()%2!=0)
-        temp.append(1,'x');
+        temp+='x';
     return temp;
 }
 
@@ -81,11 +77,11 @@ string encrypt(string temp,char playfair[5][5])
         y1=column(playfair,temp[i]);
         y2=column(playfair,temp[i+1]);
         if(x1==x2)
-            cipher=cipher.append(1,playfair[x1][(y1+1)%5]).append(1,playfair[x2][(y2+1)%5]);
+            cipher=cipher + playfair[x1][(y1+1)%5] + playfair[x2][(y2+1)%5];
         else if(y1==y2)
-            cipher=cipher.append(1,playfair[(x1+1)%5][y1]).append(1,playfair[(x2+1)%5][y2]);
+            cipher=cipher + playfair[(x1+1)%5][y1] + playfair[(x2+1)%5][y2];
         else
-            cipher=cipher.append(1,playfair[x1][y2]).append(1,playfair[x2][y1]);
+            cipher=cipher + playfair[x1][y2] + playfair[x2][y1];
     }
     return cipher;
 }
@@ -101,11 +97,11 @@ string decrypt(string cipher,char playfair[5][5])
         y1=column(playfair,cipher[i]);
         y2=column(playfair,cipher[i+1]);
         if(x1==x2)
-            temp=temp.append(1,playfair[x1][(y1+4)%5]).append(1,playfair[x2][(y2+4)%5]);
+            temp=temp + playfair[x1][(y1+4)%5] + playfair[x2][(y2+4)%5];
         else if(y1==y2)
-            temp=temp.append(1,playfair[(x1+4)%5][y1]).append(1,playfair[(x2+4)%5][y2]);
+            temp=temp + playfair[(x1+4)%5][y1] + playfair[(x2+4)%5][y2];
         else
-            temp=temp.append(1,playfair[x1][y2]).append(1,playfair[x2][y1]);
+            temp=temp + playfair[x1][y2] + playfair[x2][y1];
     }
     return temp;
 }
@@ -119,7 +115,9 @@ int main()
     temp=constructDigrams(ptext);
     do
     {
-        for(int i=0;i<5;i++)for(int j=0;j<5;j++)playfair[i][j]=0;
+        for(int i=0;i<5;i++)
+            for(int j=0;j<5;j++)
+                playfair[i][j]=0;
         cout<<"Enter the key    : ";cin>>key;
         constructPlayFairMat(playfair,key);
         for(int i=0;i<5;i++)
