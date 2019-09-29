@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <time.h>
 using namespace std;
 
 void computeKeySpace(string str, int l, int r,vector<string>& keySpace)
@@ -26,7 +27,6 @@ void computeKeySpace(string str, int l, int r,vector<string>& keySpace)
 int main()
 {
     int i,n;
-    fstream fs;
     vector<string> keySpace;
     string text;
     string uniq="";
@@ -34,15 +34,16 @@ int main()
     string cipher="";
 
     //i.    Take input from file
-    ifstream in( "plaintext.txt" );
-    in>>text;                               //Taking input from file
+    ifstream fin( "plaintext.txt" );
+    fin>>text;                               //Taking input from file
     cout<<"Plain text : "<<text<<endl;
+    fin.close();
 
     //ii.   Compute Key Space
     n=text.length();
     for(i=0;i<n;i++)
         if(uniq.find(text[i])==-1)
-            uniq.append(1,text[i]);
+            uniq+=text[i];
     cout<<"Unique Set : {"<<uniq<<"}"<<endl;
     cout<<"KEY SPACE : "<<endl;
     computeKeySpace(uniq,0,uniq.length()-1,keySpace);
@@ -53,12 +54,12 @@ int main()
     cout<<"Chosen Key : "<<key<<endl;
     for(i=0;i<n;i++)
     {
-        cipher.append(1,key[uniq.find(text[i])]);
+        cipher+=key[uniq.find(text[i])];
     }
     cout<<"Cipher Text : "<<cipher<<endl;
-    ofstream out("cipher.txt");
-    out<<cipher;
-
+    ofstream fout("cipher.txt");
+    fout<<cipher;
+    fout.close();
     //iv.   Calculate Frequency of Occurences of each alphabet
     int freq[uniq.length()];
     for(i=0;i<uniq.length();i++)
@@ -68,22 +69,22 @@ int main()
                                             //Display Frequency
     cout<<"FREQ\tPLAIN\tCIPHER"<<endl;
     for(i=0;i<uniq.length();i++)
-        cout<<freq[i]<<"\t"<<uniq[i]<<"\t"<<key[i]<<endl;
+        cout<<freq[i]*1.0/text.length()<<"\t"<<uniq[i]<<"\t"<<key[i]<<endl;
 
-    //Ext   Brute Force Attack
+    // Extra :   Brute Force Attack (not needed for lab test)
     string decipher;
     int j;
     for(i=0;i<keySpace.size();i++)
     {
         decipher="";
         for(j=0;j<cipher.length();j++)
-            decipher.append(1,keySpace[i][uniq.find(cipher[j])]);
+            decipher+=keySpace[i][uniq.find(cipher[j])];
         if(decipher==text)
         {
             cout<<"Brute Force Hits : "<<i+1<<endl;
             break;
         }
     }
-
+    // End of Brute Force Attack
     return 0;
 }
