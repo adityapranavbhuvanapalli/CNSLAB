@@ -23,7 +23,7 @@ int main()
 
 	for(int i=1;i<=m;i++)
 		for(int j=0;j<z;j++)
-			cipher.append(1,matrix[j][key.find(i+48)]);
+			cipher+=(matrix[j][key.find(i+48)]);
     cout<<endl;
 	cout<<"Cipher text is       : "<<cipher<<endl;
 
@@ -35,7 +35,7 @@ int main()
 
 	for(int i=0;i<z;i++)
 		for(int j=0;j<m;j++)
-			decipher.append(1,matrix[i][j]);
+			decipher+=(matrix[i][j]);
 
 	cout<<"Decipher text is     : "<<decipher<<endl;
 	return 0;
