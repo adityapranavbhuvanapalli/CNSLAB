@@ -51,7 +51,7 @@ void matrixInverse(int a[3][3], int n, int invDet, int inv[3][3] )
 	else
 	{
 	    //Note: MEFM is the matrix from eliminating 1st row and col from 5x5 matrix
-	    //MEFM :1201 --F-First(0), M-Middle(1), E-End(2) -- 0,1,2 are indices.
+	    //MEFM :1201 -- F-First(0), M-Middle(1), E-End(2) -- 0,1,2 are indices.
 	    int mefm[4][4],t[4]={1,2,0,1};
 	    for(int i=0;i<4;i++)
             for(int j=0;j<4;j++)

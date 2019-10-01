@@ -1,3 +1,4 @@
+//Author : Aditya Pranav Bhuvanapalli
 #include <iostream>
 #include<cmath>
 using namespace std;
@@ -22,6 +23,7 @@ int column(char A[5][5],char ch)
     return -1;
 }
 
+//One more implementation of below fn is available at the end of the code
 void constructPlayFairMat(char playfair[5][5],string key)
 {
     char ch='a';
@@ -137,3 +139,38 @@ int main()
     while(ch==1);
     return 0;
 }
+
+
+
+/*
+//One more implementation of the fn to construct the playfair matrix
+//Use any one of the fns
+
+void constructPlayFairMat(char playfair[5][5], string key)
+{
+    char ch='a';
+    int i,j,k=0,flag=0;
+    for(i=0;i<5;i++)
+    {
+        for(j=0;j<5;j++)
+        {
+            if(flag==0)
+            {
+                while(k<key.length() && row(playfair,key[k])!=-1)
+                    k++;
+                if(k==key.length())
+                    flag=1, j--;
+                else
+                    playfair[i][j]=key[k], k++;
+            }
+            else    //flag sets when key ends
+            {
+                while(ch<122 && (row(playfair,ch)!=-1 || ch=='j'))
+                    ch++;
+                playfair[i][j]=ch;
+                ch++;
+            }
+        }
+    }
+}
+*/
