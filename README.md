@@ -1,4 +1,4 @@
 # CNSLAB
 CNS labsets
 
-Refer Labsets/ (not LabsetPDFs/)
+Refer Labsets/
