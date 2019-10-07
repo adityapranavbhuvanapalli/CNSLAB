@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1568713433 source:/home/cnslaba2/Documents/BAP/Labset/P5/main.cpp
+	<bits/stdc++.h>
+
+1569764521 source:/media/root/Windows/Users/PRANAV/Documents/GitHub/CNSLAB/Labsets/P5_DES_1stPhase_KeyGeneration/main.cpp
+	<bits/stdc++.h>
+	<fstream>
+
