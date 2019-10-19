@@ -18,7 +18,7 @@ int randNofn()
 {
     int x;
     do{
-        x=rand()%50;
+        x=rand()%(1000-100)+100;
     }while(x%4!=3 && !prime(x));
     return x;
 }
@@ -37,7 +37,7 @@ int fnBBS(int p, int q)
     n=p*q;
     do{
         s=rand()%n;
-    }while(gcd(n,s)!=1);
+    }while(s==1 && s%p!=1 && s%q!=1);
     x=(s*s)%n;
     cout<<"Number of bits : "; cin>>num;
     while(num--)
