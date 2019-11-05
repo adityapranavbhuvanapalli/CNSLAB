@@ -1,5 +1,4 @@
 //Author : Aditya Pranav Bhuvanapalli
-//Note : RabinMiller will be updated shortly
 #include <bits/stdc++.h>
 #include <iostream>
 #include <time.h>
