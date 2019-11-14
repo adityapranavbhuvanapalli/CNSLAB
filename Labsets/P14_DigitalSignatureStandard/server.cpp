@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define SA struct sockaddr
-#define typeL long
+#define typeL unsigned long
 using namespace std;
 
 typeL powermod(typeL a, typeL b, typeL  q)
@@ -16,24 +16,35 @@ typeL powermod(typeL a, typeL b, typeL  q)
 	return res;
 }
 
-typeL inverse(typeL a,typeL m)
+typeL randno(typeL m, typeL n)	//range = (m,n)
 {
-	typeL x=1,y=0;
-	typeL m0=m;
-	if(m==1)
-		return 0;
-	while(a>1)
+	return rand()%(n-m-1)+m+1;
+}
+
+typeL mod(long m, typeL n)	//m%n
+{
+	return (m>=0)?m%n:mod(m+n,n);
+}
+
+typeL inverse(typeL num, typeL n)
+{
+	typeL i=0, p[1000],q[1000],t, r=num, d=n;
+	if(d%r==0) return 1;
+	do
 	{
-		typeL r = a%m;
-		typeL tempy=y;
-		y=x-(a/m)*y;
-		x=tempy;
-		a=m;
-		m=r;
-	}
-	if(x<0)
-		x+=m0;
-	return x;
+		t=d;
+		q[i]=d/r;	
+		d=r;
+		r=t%r;
+		if(i==0 || i==1) p[i]=i;
+		else p[i]=mod(p[i-2]-p[i-1]*q[i-2],n);
+		//cout<<t<<" = "<<q[i]<<"("<<d<<") + "<<r<<"\tP"<<i<<" = "<<p[i]<<endl;
+		i++;	
+	
+	} 
+	while(r!=0);
+	p[i]=mod( (p[i-2]-p[i-1]*q[i-2]) , n);
+    	return p[i];
 }
 
 typeL H(typeL M)
@@ -66,18 +77,18 @@ int main()
 	
 	hashval=H(M);
 	do{ 
-		h=rand()%(p-4)+2;	// 1 < h < (p-1)
+		h=randno(1,p-1);	// 1 < h < (p-1)
 		g=powermod(h,(p-1)/q,p);	// g > 1
 	}while(g<=1);	// because condition: g>1
 
-	x=rand()%(q-2)+1;	//User private key, 0 < x < q
+	x=randno(0,q);	//User private key, 0 < x < q
 	y=powermod(g,x,p);	//User public key
 
-	k=rand()%(q-2)+1;	// 0 < k < q
+	k=randno(0,q);	// 0 < k < q
 
 	//Signing
-	r=powermod(g,k,p)%q;	//f2() = (g^k mod p) mod q 
-	s=( inverse(k,q) * ( hashval + x*r ) )%q;	//f1() = [invk ( H(M) + xr )] mod q
+	r=mod(powermod(g,k,p) , q);	//f2() = (g^k mod p) mod q 
+	s=mod(inverse(k,q)*( hashval + x*r ) , q);	//f1() = [invk ( H(M) + xr )] mod q
 
 	cout<<"Signature = ("<<r<<" , "<<s<<")"<<endl;
 
