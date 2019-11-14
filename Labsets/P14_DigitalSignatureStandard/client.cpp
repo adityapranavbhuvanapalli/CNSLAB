@@ -67,14 +67,6 @@ typeL H(typeL M)
 	return (M^1234); //hash key=1234
 }
 
-typeL f4(typeL y,typeL p,typeL q,typeL g,typeL hashval, typeL w,typeL r)
-{
-	typeL u1,u2;
-	u1=(hashval*w)%q;
-	u2=(r*w)%q;
-	return (( powermod(g,u1,p) * powermod(y,u2,p) )%p)%q;
-} 
-
 int main()
 {
     	int port;
