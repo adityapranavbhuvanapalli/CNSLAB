@@ -16,21 +16,24 @@ typeL powermod(typeL a, typeL b, typeL  q)
 	return res;
 }
 
-typeL inverse(typeL k , typeL x)
+typeL inverse(typeL a,typeL m)
 {
-	typeL d=x, r=k, t, q[100],p[100];
-	int i=0;
-	do{
-		t=d;
-		q[i]=d/r;
-		d=r;
-		r=t%r;
-		if(i==0 || i==1) p[i]=i;
-		else p[i]=(p[i-2]-p[i-1]*q[i-2])%x;
-		i++;
-	}while(r!=0);
-	p[i]=(p[i-2]-p[i-1]*q[i-2])%x;
-	return p[i];
+	typeL x=1,y=0;
+	typeL m0=m;
+	if(m==1)
+		return 0;
+	while(a>1)
+	{
+		typeL r = a%m;
+		typeL tempy=y;
+		y=x-(a/m)*y;
+		x=tempy;
+		a=m;
+		m=r;
+	}
+	if(x<0)
+		x+=m0;
+	return x;
 }
 
 typeL H(typeL M)
@@ -38,17 +41,12 @@ typeL H(typeL M)
 	return (M^1234); //hash key=1234
 }
 
-typeL f3(typeL s,typeL q)
-{
-	return inverse(s,q)%q;
-}
-
 typeL f4(typeL y,typeL p,typeL q,typeL g,typeL hashval, typeL w,typeL r)
 {
 	typeL u1,u2;
-	u1=(H(hashval)*w)%q;
+	u1=(hashval*w)%q;
 	u2=(r*w)%q;
-	return ( powermod(g,u1,p) * powermod(y,u2,p) )%q;
+	return (( powermod(g,u1,p) * powermod(y,u2,p) )%p)%q;
 } 
 
 int main()
@@ -57,19 +55,18 @@ int main()
     	char addr[100]={'\0'};
     	cout<<"Address  : "; scanf("%s",addr);
     	cout<<"Port     : "; cin>>port;
-    
-	srand(time(NULL));
-	typeL p,q,r,s,w,v,g,hashval,y;
-	cout<<"p = "; cin>>p;
-	cout<<"q = "; cin>>q;
-	
+
 	// ****Connection
 	struct sockaddr_in server={AF_INET, htons(port), inet_addr(addr)};
     	int sockfd = socket(AF_INET, SOCK_STREAM,0);
     	connect(sockfd, (SA*)&server, sizeof(server));	
     	// ****Connection Established
-
-	
+    
+	srand(time(NULL));
+	typeL p,q,r,s,w,v,g,hashval,y;
+	cout<<"p = "; cin>>p;
+	cout<<"q = "; cin>>q;
+		
 	recv(sockfd, &hashval, sizeof(hashval), 0);	
 	recv(sockfd, &r, sizeof(r), 0);
 	recv(sockfd, &s, sizeof(s), 0);	
@@ -84,10 +81,14 @@ int main()
 	cout<<"G    : "<<g<<endl;
 	
 	//Verifying
-	w=f3(s,q);
-	v=f4(y,p,q,g,hashval,w,r);
-	if(v==r) cout<<"Digital Signature Verified"<<endl;
-	else cout<<"Digital Signature is invalid"<<endl;
+	w=inverse(s,q)%q;	// f3() = (invS) mod q
+	typeL u1= (hashval*w)%q;
+	typeL u2= (r*w)%q;
+	v = ((powermod(g,u1,p)*powermod(y,u2,p))%p)%q;
+	cout<<endl<<"V    : "<<v<<endl;
+
+	if(v==r) cout<<"Digital Signature Verified. (V=R)"<<endl;
+	else cout<<"Digital Signature is invalid (V!=R)"<<endl;
 
     	return 0;
 }
@@ -95,15 +96,18 @@ int main()
 /************************************
 Output:
 Address  : 127.0.0.1
-Port     : 6000
-p = 71
-q = 7
+Port     : 8000
+p = 67
+q = 11
 Packet received with values
-Hash : 1278
-R    : 2
-S    : 6
-Y    : 20
-G    : 20
-Digital Signature Verified
+Hash : 1258
+R    : 4
+S    : 5
+Y    : 40
+G    : 22
+
+V    : 4
+Digital Signature Verified. (V=R)
+
 ************************************/
 
