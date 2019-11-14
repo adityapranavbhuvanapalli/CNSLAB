@@ -5,7 +5,7 @@
 #include "stdio.h"
 #include <stdlib.h>
 #define SA struct sockaddr
-#define typeL long
+#define typeL long long
 using namespace std;
 
 typeL powermod(typeL a, typeL b, typeL  q)
