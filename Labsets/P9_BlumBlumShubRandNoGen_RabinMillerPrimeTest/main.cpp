@@ -37,9 +37,9 @@ typeL  fnBBS(typeL  p, typeL  q)
     while(i<=num)
     {
         x=(x*x)%n;
-	b=(b<<1) | (x&1);   // Appending last bit of x to b
-	cout<<"X"<<i<<" = "<< x<<endl;
-	i++;
+		b=(b<<1) | (x&1);   // Appending last bit of x to b
+		cout<<"X"<<i<<" = "<< x<<endl;
+		i++;
     }
     return b;
 }

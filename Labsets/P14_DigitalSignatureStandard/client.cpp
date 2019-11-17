@@ -42,26 +42,6 @@ typeL inverse(typeL num, typeL n)
     	return p[i];
 }
 
-typeL inverse1(typeL a,typeL m)
-{
-	typeL x=1,y=0;
-	typeL m0=m;
-	if(m==1)
-		return 0;
-	while(a>1)
-	{
-		typeL r = a%m;
-		typeL tempy=y;
-		y=x-(a/m)*y;
-		x=tempy;
-		a=m;
-		m=r;
-	}
-	if(x<0)
-		x+=m0;
-	return x;
-}
-
 typeL H(typeL M)
 {
 	return (M^1234); //hash key=1234
