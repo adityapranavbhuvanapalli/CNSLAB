@@ -19,7 +19,7 @@ int main()
     cout<<endl;
 
     int keylen=keyInStr.length();
-    int i,j,t;
+    int i,j=0,t;
     for(i=0;i<keylen;i++)
         K[i]=keyInStr[i];
 
@@ -35,7 +35,8 @@ int main()
     }
 
     // Stream Generation
-    i=j=0;
+	cout<<"Key Stream : ";    
+	i=j=0;
     while(i<msg.length())
     {
         i=(i+1)%256;
@@ -43,7 +44,9 @@ int main()
         swap(S[i],S[j]);
         t=(S[i]+S[j])%256;
         K[i]=S[t];
+		cout<<K[i]<<" ";
     }
+	cout<<endl;
 
     cout<<"Plain text : ";
     for(i=0;i<msg.length();i++)
