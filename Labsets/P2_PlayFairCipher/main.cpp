@@ -23,38 +23,23 @@ int column(char A[5][5],char ch)
     return -1;
 }
 
-//One more implementation of below fn is available at the end of the code
 void constructPlayFairMat(char playfair[5][5],string key)
 {
-    char ch='a';
-    int i,j,k=0;
-    for(i=0;i<5;i++)
-    {
-        for(j=0;j<5;j++)
-        {
-
-            while(k<key.length() && row(playfair,key[k])!=-1)
-                k++;
-            if(k==key.length()) break;
-            playfair[i][j]=key[k];
-            k++;
-        }
-        if(k==key.length()) break;
-    }
-    while(i<5)
-    {
-
-        while(j<5)
-        {
-            while(ch<122 && (row(playfair,ch)!=-1 || ch=='j'))
-                ch++;
-            playfair[i][j]=ch;
-            ch++;
-            j++;
-        }
-        j=0;
-        i++;
-    }
+	string temp="";
+	char ch='a';
+	int k=0;
+    for(int i=0;i<key.length();i++)
+        if(temp.find(key[i])==-1)
+            temp += (key[i]=='j') ? 'i' : key[i] ;
+	while(ch<='z')
+	{
+		if(temp.find(ch)==-1)	temp+=ch;
+		if(ch=='i')	ch++;
+		ch++;
+	}
+	for(int i=0;i<5;i++)
+		for(int j=0;j<5;j++)
+			playfair[i][j]=temp[k++];
 }
 
 string constructDigrams(string temp)
@@ -139,38 +124,3 @@ int main()
     while(ch==1);
     return 0;
 }
-
-
-
-/*
-//One more implementation of the fn to construct the playfair matrix
-//Use any one of the fns
-
-void constructPlayFairMat(char playfair[5][5], string key)
-{
-    char ch='a';
-    int i,j,k=0,flag=0;
-    for(i=0;i<5;i++)
-    {
-        for(j=0;j<5;j++)
-        {
-            if(flag==0)
-            {
-                while(k<key.length() && row(playfair,key[k])!=-1)
-                    k++;
-                if(k==key.length())
-                    flag=1, j--;
-                else
-                    playfair[i][j]=key[k], k++;
-            }
-            else    //flag sets when key ends
-            {
-                while(ch<122 && (row(playfair,ch)!=-1 || ch=='j'))
-                    ch++;
-                playfair[i][j]=ch;
-                ch++;
-            }
-        }
-    }
-}
-*/
