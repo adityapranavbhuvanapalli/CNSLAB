@@ -24,7 +24,7 @@ int main()
 	for(int i=1;i<=m;i++)
 		for(int j=0;j<z;j++)
 			cipher+=(matrix[j][key.find(i+48)]);
-    cout<<endl;
+        cout<<endl;
 	cout<<"Cipher text is       : "<<cipher<<endl;
 
 	//Decryption
