@@ -89,7 +89,7 @@ string decrypt(string cipher, int n)
     //P=C*inv(K)
     int P[1000][3]={0};
     int invK[3][3];
-    matrixInverse(key, n, fnDet(key,n), invK);
+    matrixInverse(key, n, fnDetInv(fnDet(key,n)), invK);
     matrixMultiply(C, cipher.length()/n, n, invK, n, n, P);
     string text="";
     for(int i=0; i<cipher.length()/n; i++)
@@ -114,3 +114,5 @@ int main()
     cout<<"Decrypted text   : "<<decrypt(cipher,n)<<endl;
     return 0;
 }
+
+
